@@ -1,0 +1,75 @@
+<html>
+<head>
+	<title>Course</title>
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="js/models/course.model.js"></script>
+	<script src="js/services/course.service.js"></script>
+</head>
+<body>
+<div class="container">
+		<h1>Course Management System</h1>
+		<form>
+		<div>Subject:
+			<input type="text" id="sub" name="subject" placeholder="Enter Subject"/>
+		</div>
+		<div>Fee:
+			<input type="text" id="fee" name="fee" placeholder="Enter Fee"/>
+		</div>
+		<div>Duration:
+			<input type="text" id="duration" name="duration" placeholder="Enter Duration"/>
+		</div>
+		<div>kind:
+			<input type="text" id="kind" name="kind" placeholder="Enter Kind"/>
+		</div>
+		<button type="submit" id="save-course" class="btn btn-primary">Save</button>
+		<a href="javascript:void(0)" id="show-course">Show Course</a>
+		</form>
+		<div id="course-list"></div>
+</div>
+
+<script>
+
+function getObj(key){
+	return document.getElementById(key);
+}
+
+var courseService=new CourseService();
+window.onload=function(){
+	var subject=getObj("sub");
+	var fee=getObj("fee");
+	var duration=getObj("duration");
+	var kind=getObj("kind");
+	var saveButton=getObj("save-course");
+	var showLink=getObj("show-course");
+	var showCourseList=getObj("course-list");
+
+	saveButton.onclick=function(){
+		var course=new Course();
+		course.subject=sub.value;
+		course.fee=fee.value;
+		course.duration=duration.value;
+		course.kind=kind.value;
+		courseService.add(course);
+		return false;
+	};
+
+	showLink.onclick=function(){
+		courseList=courseService.getAll();
+		var content="";
+		for (var i = 0; i < courseList.length; i++) {
+			var course=courseList[i];
+			content+="<li>" +course.subject+ " It cost you: " +course.fee+ " Time Duration is :" +course.duration+ " Duration Type is : " +course.kind+ "</li>"
+		};
+		showCourseList.innerHTML=content;
+	};
+};
+</script>
+</body>
+</html>

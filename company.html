@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Company</title>
+integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">
+</script>
+	<script src="js/models/company.model.js"></script>
+	<script src="js/services/company.service.js"></script>
+</head>
+<body>	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+<div class="container">
+<h1>Company Management System</h1>
+<form>
+<div>Company Name:
+	<input type="text" id="cname" name="cname" placeholder="Enter Company Name">
+</div>
+<div>Address:
+	<input type="text" id="address" name="address" placeholder="Enter Address">
+</div>
+<div>Number of employee:
+	<input type="text" id="noemp" name="noemp" placeholder="Enter Number of Employee">
+</div>
+<button type="submit" id="save-company" class="btn btn-primary btn-sm">Save</button>
+<a href="javascript:void(0)" id="show-company">Show Company</a>
+</form>
+<div id="company-list"></div>
+</div>
+
+<script>
+
+function getObj(key){
+	return document.getElementById(key);
+}
+var companyService=new CompanyService();
+window.onclick=function(){
+	var name=getObj("cname");
+	var address=getObj("address");
+	var noemp=getObj("noemp");
+	var saveButton=getObj("save-company");
+	var showLink=getObj("show-company");
+	var showCompanyList=getObj("company-list");
+
+
+saveButton.onload=function(){
+var company= new Company();
+company.companyName=cname.value;
+company.address=address.value;
+company.numberOfEmployee=noemp.value;
+companyService.add(company);
+return false;
+};
+
+showLink.onclick=function(){
+	companyList=companyService.getAll();
+	var content="";
+	for (var i = 0; i < companyList.length; i++) {
+		var company=companyList[i];
+		content+="<li>" +company.companyName+ " is located at " +company.address+ " " +company.numberOfEmployee+ " peoples works there.</li>";
+	};
+	showCompanyList.innerHTML=content;
+};
+};
+</script>
+
+</body>
+</html>

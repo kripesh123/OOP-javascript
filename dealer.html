@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>Dealer</title>
+	<script src="js/models/dealer.model.js"></script>
+	<script src="js/services/dealer.service.js"></script>
+</head>
+<body>
+<h1>Dealer Management System</h1>
+<form>
+<div>Dealer Name:
+	<input type="text" id="dname" name"dealer_name" placeholder="Enter Dealer Name">
+</div>
+<div>Address:
+	<input type="text" id="add" name"address" placeholder="Enter Address">
+</div>
+<div>Contact:
+	<input type="text" id="contact" name"contact" placeholder="Enter Contact">
+</div>
+<button type="submit" id="save-user" class="btn btn-primary btn-sm">Save</button>
+<a href="javascript:void(0)" id="show-dealer">Show Dealers</a>
+</form>
+<div id="dealer-list"></div>
+<script>
+
+function getObj(key){
+	return document.getElementById(key)
+}
+
+var dealerService= new DealerService();
+window.onload=function(){
+var dname=getObj("dname");
+var address=getObj("add");
+var contact=getObj("contact");
+var saveButton=getObj("save-user");
+var showLink=getObj("show-dealer");
+var showDealerList=getObj("dealer-list")
+}
+
+saveButton.onclick=function(){
+	var dealer=new Dealer();
+	dealer.dName=dname.value;
+	dealer.address=add.value;
+	dealer.contact=contact.value;
+	dealerService.add(dealer);
+	return false;
+}
+
+showLink.onclick=function(){
+	dealerList=dealerService.getAll();
+	var content="";
+	for (var i = 0; i < dealerList.length; i++) {
+		var dealer=dealerList[i];
+		content+="<li>" +dealer.dName+ " located at " +dealer.address+ " Please contact Us: " +dealer.contact+ "</li>";
+	};
+showDealerList.innerHTML=content;
+};
+</script>
+</body>
+</html>

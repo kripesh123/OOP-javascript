@@ -1,0 +1,67 @@
+<html>
+<head>
+	<title>Teacher</title>
+	<script src="js/models/teacher.model.js"></script>
+	<script src="js/services/teacher.service.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+<h1>Teacher Management System</h1>
+<form>
+<div>First Name:
+	<input id="fname" name="first_name" type="text" placeholder="Enter First Name"/>
+</div>
+<div>Last Name:
+	<input id="lname" name="last_name" type="text" placeholder="Enter Second Name">
+</div>
+<div>Address:
+	<input id="address" name="address" type="text" placeholder="Enter Address">
+</div>
+<button type="submit" id="save-teacher" class="btn btn-success" >Save</button>
+<a href="javascript:void(0)" id="show-teacher">CLick me!</a>
+</form>
+<div id="teacher-list"></div>
+</div>
+
+<script>
+function getObj(key){
+	return document.getElementById(key);
+} 
+var teacherService= new TeacherService();
+window.onload=function(){
+	var fname=getObj("fname");
+	var lname=getObj("lname");
+	var address=getObj("address");
+	var saveButton=getObj("save-teacher");
+	var showLink=getObj("show-teacher");
+	var showTeacherList=getObj("teacher-list");
+
+	saveButton.onclick=function(){
+		var teacher=new Teacher();
+		teacher.firstName=fname.value;
+		teacher.lastName=lname.value;
+		teacher.address=address.value;
+		teacherService.add(teacher);
+		return false;
+	};
+	showLink.onclick=function(){
+		teacherList=teacherService.getAll();
+		var content="";
+		for (var i = 0; i < teacherList.length; i++) {
+			var teacher=teacherList[i];
+			content+="<li>" +teacher.firstName+ " " +teacher.lastName+ " Address :" +teacher.address+ "</li>";
+		};
+		showTeacherList.innerHTML=content;
+	};
+};
+</script>
+</body>
+</html>

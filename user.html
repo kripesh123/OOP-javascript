@@ -1,0 +1,73 @@
+<html>
+<head>
+	<title>User</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="js/models/user.model.js"></script>
+	<script src="js/services/user.service.js"></script>
+</head>
+<body>
+<div class="container">
+<h1>User Management System</h1>
+<form>
+<div>First Name:
+	<input type="text" id="fname" name="first_name" placeholder="Enter First Name"/>
+</div>
+<div>Last Name:
+	<input type="text" id="lname" name="last_name" placeholder="Enter Last Name"/>
+</div>
+<div>Address:
+	<input type="text" id="add" name="address" placeholder="Enter Address"/>
+</div>
+<div>Email:
+	<input type="email" id="email" name="email" placeholder="Enter Email">
+</div>
+<button type="submit" id="save-user" class="btn btn-primary btn-sm">Save</button>
+<a href="javascript:void(0)" id="show-user">Show User</a>
+</form>
+<div id="user-list"></div>
+</div>
+
+<script>
+function getObj(key){
+	return document.getElementById(key);
+}
+ var userService= new UserService();
+window.onload=function(){
+var fname=getObj("fname");
+var lname=getObj("lname");
+var address=getObj("add");
+var email=getObj("email");
+var saveButton=getObj("save-user");
+var showLink=getObj("show-user");
+var showUserList=getObj("user-list");
+
+saveButton.onclick=function(){
+	var user= new User();
+	user.firstName=fname.value;
+	user.lastName=lname.value;
+	user.address=add.value;
+	user.email=email.value;
+	userService.add(user);
+	return false;
+};
+showLink.onclick=function(){
+	userList=userService.getAll();
+	var content="";
+	for (var i = 0; i < userList.length; i++) {
+		var user=userList[i];
+
+		content+="<li>" +user.firstName+ " " +user.lastName+ "</li>";
+	};
+	showUserList.innerHTML=content;
+};
+};
+</script>
+</body>
+</html>

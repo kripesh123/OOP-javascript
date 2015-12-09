@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Employee</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="js/models/employee.model.js"></script>
+<script src="js/services/employee.service.js"></script>
+
+</head>
+<body>
+<div class="container">
+<h1>Employee Management System</h1>
+<form>
+<div>Full Name:
+<input type="text" id="fname" name="full_name" placeholder="Enter Full Name:"/>
+</div>
+<div>Email:
+	<input type="email" id="email" name="email" placeholder="Enter Email"/>
+</div>
+<div>Salary:
+	<input type="text" id="salary" name="salary" placeholder="Enter Salary"/>
+</div>
+<button type="submit" id="save-employee" class="btn btn-success">Submit</button>
+<a href="javascript:void(0)" id="show-employee">Show Employee</a>
+</form>
+<div id="employee-list"></div>
+</div>
+
+<script>
+
+function getObj(key){
+	return document.getElementById(key);
+}
+
+var employeeService= new EmployeeService();
+window.onload=function(){
+	var fname=getObj("fname");
+	var email=getObj("email");
+	var salary=getObj("salary");
+	var saveButton=getObj("save-employee");
+	var showLink=getObj("show-employee");
+	var showEmployeeList=getObj("employee-list");
+
+
+saveButton.onclick=function(){
+	var employee= new Employee();
+	employee.fullName=fname.value;
+	employee.email=email.value;
+	employee.salary=salary.value;
+	employeeService.add(employee);
+	return false;
+}
+
+showLink.onclick=function(){
+	employeeList=employeeService.getAll();
+	var content="";
+	for (var i = 0; i < employeeList.length; i++) {
+		var employee=employeeList[i];
+		content+="<li>"+employee.fullName+ " " +employee.email+ " Salary is: " +employee.salary+ "</li>";
+	};
+	showEmployeeList.innerHTML=content;
+};
+};
+</script>
+</body>
+</html>

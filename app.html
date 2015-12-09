@@ -1,0 +1,71 @@
+<html>
+<head>
+	<title>App</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="js/models/student.model.js"></script>
+	<script src="js/services/student.service.js"></script>
+</head>
+<body>
+	<div class="container">
+<h1>Student Management System</h1>
+
+<form>
+<div>First Name:
+	<input type="text" id="fname" name="first_name" placeholder="Enter First Name"/>
+</div>
+<div>Last Name:
+<input type="text" id="lname" class="last_name" placeholder="Enter Last Name"/>
+</div>
+<div>Email:
+	<input type="email" id="email" class="email" placeholder="Enter Email!"/>
+</div>
+<button type="submit" id="save-student" class="btn btn-success">Save</button>
+<a href="javascript:void(0)" id="show-student">Show Student</a>
+</form>
+<div id="student-list"></div>
+</div>
+<script>
+
+function getObj(key){
+	return document.getElementById(key);
+}
+var studentService=new StudentService();
+window.onload=function(){
+
+var fname=getObj("fname");
+var lname=getObj("lname");
+var email=getObj("email");
+var saveButton=getObj("save-student");
+var showLink=getObj("show-student");
+var showStudentList=getObj("student-list");
+
+saveButton.onclick=function(){
+	var student= new Student();
+	student.firstName=fname.value;
+	student.lastName=lname.value;
+	student.email=email.value;
+	studentService.add(student);
+	return false;
+};
+
+showLink.onclick=function(){
+	studentList =studentService.getAll();
+	var content="";
+	for (var i = 0; i < studentList.length; i++) {
+	var student=studentList[i];
+	content+="<li>" + student.firstName + " " + student.lastName + "</li>";
+	};
+	showStudentList.innerHTML=content;
+};
+};
+
+</script>
+</body>
+</html>

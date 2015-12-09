@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title></title>
+<script src=""></script>
+</head>
+<body>
+
+<div id="box"></div>
+<div id="user"></div>
+<input type="text" id="clock"></input>
+<input type="button" id="stop" value="Stop"></input>
+
+<script>
+var colors=["red","blue","yellow"];
+var names=["Ram","Shyam","Hari","Sofia","Ristha"];
+
+function getObj(key){
+	return document.getElementById(key);
+}
+var box=getObj('box');
+var user=getObj('user');
+var clock=getObj('clock');
+var stop=getObj('stop');
+
+box.style.height="300px";
+box.style.width="300px";
+box.style.border="2px solid red";
+
+var i=0;
+var inter=setInterval(function(){
+
+box.style.background=colors[i];
+i++;
+if(i==colors.length){
+	i=0;
+}
+},1000);
+
+var j=0;
+var interval=setInterval(function(){
+	var d=new Date();
+	clock.value=d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
+	user.innerHTML=names[j];
+	j++;
+	if(j==names.length){
+		j=0;
+	}
+},1000);
+
+stop.onclick=function(){
+	clearInterval(interval);
+};
+box.onmouseover=function(){
+	clearInterval(inter);
+}
+
+</script>
+</body>
+</html>
